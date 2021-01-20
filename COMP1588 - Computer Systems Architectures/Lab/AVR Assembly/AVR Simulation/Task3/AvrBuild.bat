@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "C:\Users\user\Documents\AVR Project\Task3\labels.tmp" -fI -W+ie -o "C:\Users\user\Documents\AVR Project\Task3\Task3.hex" -d "C:\Users\user\Documents\AVR Project\Task3\Task3.obj" -e "C:\Users\user\Documents\AVR Project\Task3\Task3.eep" -m "C:\Users\user\Documents\AVR Project\Task3\Task3.map" "C:\Users\user\Documents\AVR Project\Task3\Task3.asm"

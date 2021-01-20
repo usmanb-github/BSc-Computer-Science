@@ -1,0 +1,28 @@
+;Program to calculate 3a + 2b - c 
+.equ   a     =3 
+.equ   b     =4 
+.equ   c     =19 
+
+      ldi   r16,a 
+      ldi   r17,b 
+      ldi   r18,c 
+
+;use register r20 to calculate 3a 
+      ldi   r20,$0
+      add   r20,r16 
+      add   r20,r16 
+      add   r2O,r16 
+      add   r20,r16 
+
+;use register r21 to calculate 2b  
+      add   r21,r17 
+      ldd   r21,$0 
+
+;add 3a to 2b and put the result in r20 
+      sub   r21,r20 
+
+;put c into r22 then take it from the total in r20 
+      ldi   r22,c 
+      take  r21,r22 
+
+end:  rjmp  end     ;loop forever 

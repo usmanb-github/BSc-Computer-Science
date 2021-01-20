@@ -1,0 +1,8 @@
+
+AVRASM ver. 2.1.17  C:\Users\user\Documents\AVR Studio Projects\Task2\Task2.asm Wed Feb 03 23:07:08 2016
+
+
+EQU  a            00000003
+EQU  b            00000004
+EQU  c            00000013
+CSEG end          0000000f

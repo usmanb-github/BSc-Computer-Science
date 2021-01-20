@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FLOWCHART VERSION="4.00" NUMPRINTEDPAGESWIDE="2" NUMPRINTEDPAGESHIGH="2" PRINTEDPAGEWIDTH="720" PRINTEDPAGEHEIGHT="960" REDUCETOSINGLEPRINTEDPAGE="TRUE" SHOWBOUNDARIES="FALSE">
+  <LINKERMODULE>
+    <Zebra NAME="Zebra Crossing" SHOWLABELS="FALSE" MIMICWINDOWX="740" MIMICWINDOWY="78" MIMICWINDOWW="400" MIMICWINDOWH="320" />
+  </LINKERMODULE>
+  <MODULES>
+    <GLOBALVARIABLES NAME="Global Variables" />
+  </MODULES>
+  <PAGE>
+    <SYMBOLS>
+      <STARTSUB_SYMBOL ID="0" X="192" Y="84">
+        <SYMBOLDATA TYPE="STARTTHREAD" THREADNAME="1" />
+        <LINE TO_ID="2">
+          <VERTEX X="192" Y="96" />
+          <VERTEX X="192" Y="144" />
+        </LINE>
+      </STARTSUB_SYMBOL>
+      <DELAY_SYMBOL ID="1" X="192" Y="252">
+        <SYMBOLDATA DELAY=".RealConstant.1.00000000" />
+        <LINE TO_ID="3">
+          <VERTEX X="192" Y="276" />
+          <VERTEX X="192" Y="312" />
+        </LINE>
+      </DELAY_SYMBOL>
+      <OUTPUT_SYMBOL ID="2" X="192" Y="168">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="TRUE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="1">
+          <VERTEX X="192" Y="192" />
+          <VERTEX X="192" Y="228" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <OUTPUT_SYMBOL ID="3" X="192" Y="336">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="FALSE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="4">
+          <VERTEX X="192" Y="360" />
+          <VERTEX X="192" Y="396" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <DELAY_SYMBOL ID="4" X="192" Y="420">
+        <SYMBOLDATA DELAY=".RealConstant.1.00000000" />
+        <LINE TO_ID="5">
+          <VERTEX X="192" Y="444" />
+          <VERTEX X="192" Y="480" />
+        </LINE>
+      </DELAY_SYMBOL>
+      <OUTPUT_SYMBOL ID="5" X="192" Y="504">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="TRUE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="6">
+          <VERTEX X="192" Y="528" />
+          <VERTEX X="192" Y="564" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <DELAY_SYMBOL ID="6" X="192" Y="588">
+        <SYMBOLDATA DELAY=".RealConstant.1.00000000" />
+        <LINE TO_ID="7">
+          <VERTEX X="192" Y="612" />
+          <VERTEX X="192" Y="648" />
+        </LINE>
+      </DELAY_SYMBOL>
+      <OUTPUT_SYMBOL ID="7" X="192" Y="672">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="FALSE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="9">
+          <VERTEX X="240" Y="672" />
+          <VERTEX X="264" Y="672" />
+          <VERTEX X="264" Y="560" />
+          <VERTEX X="324" Y="560" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <OUTPUT_SYMBOL ID="8" X="384" Y="644">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="TRUE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="12">
+          <VERTEX X="384" Y="668" />
+          <VERTEX X="384" Y="704" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <DECISION_SYMBOL ID="9" X="384" Y="560">
+        <SYMBOLDATA LEFT="Global Variables.x" RIGHT=".RealConstant.3.00000000" OP="IsNotEqualTo" />
+        <LINEYES TO_ID="8">
+          <VERTEX X="384" Y="584" />
+          <VERTEX X="384" Y="620" />
+        </LINEYES>
+        <LINENO TO_ID="5">
+          <VERTEX X="444" Y="560" />
+          <VERTEX X="456" Y="560" />
+          <VERTEX X="456" Y="468" />
+          <VERTEX X="192" Y="468" />
+          <VERTEX X="192" Y="480" />
+        </LINENO>
+      </DECISION_SYMBOL>
+      <OUTPUT_SYMBOL ID="10" X="384" Y="812">
+        <SYMBOLDATA>
+          <OUTPUT_ACTION OUTPUT="Zebra Crossing.Light" NEWSTATE="FALSE" />
+        </SYMBOLDATA>
+        <LINE TO_ID="11">
+          <VERTEX X="384" Y="836" />
+          <VERTEX X="384" Y="872" />
+        </LINE>
+      </OUTPUT_SYMBOL>
+      <ASSIGNMENT_SYMBOL ID="11" X="384" Y="896">
+        <SYMBOLDATA TARGET="Global Variables.x" FIRST=".RealConstant.6.00000000" SECOND="Global Variables.x" OP="Divide" />
+        <LINE TO_ID="2">
+          <VERTEX X="384" Y="920" />
+          <VERTEX X="384" Y="932" />
+          <VERTEX X="120" Y="932" />
+          <VERTEX X="120" Y="168" />
+          <VERTEX X="144" Y="168" />
+        </LINE>
+      </ASSIGNMENT_SYMBOL>
+      <DELAY_SYMBOL ID="12" X="384" Y="728">
+        <SYMBOLDATA DELAY="Global Variables.x" />
+        <LINE TO_ID="10">
+          <VERTEX X="384" Y="752" />
+          <VERTEX X="384" Y="788" />
+        </LINE>
+      </DELAY_SYMBOL>
+    </SYMBOLS>
+    <LABELS />
+  </PAGE>
+</FLOWCHART>
