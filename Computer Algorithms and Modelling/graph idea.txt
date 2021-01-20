@@ -1,0 +1,169 @@
+package coursework;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.function.Function2D;
+import org.jfree.data.function.NormalDistributionFunction2D;
+import org.jfree.data.general.DatasetUtilities;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+/**
+ *
+ * @author ub2232e
+ */
+public class JFreeChartGraph extends JPanel implements ActionListener {
+
+    private final XYPlot plot;
+    double mean = 0, sigma = 1, val = 1;
+
+    public static JTextField m = new JTextField(5);
+    public static JTextField sd = new JTextField(5);
+    public static JTextField valueOne = new JTextField(5);
+
+    JLabel trapArea = new JLabel("Your Trapezoidal Area will be displayed here...");
+    JLabel rectArea = new JLabel("Your Rectangle's Area will be displayed here...");
+    JButton submit = new JButton("Submit");
+    XYDataset dataset = initDataset();
+
+    NumberAxis xValues = new NumberAxis("X Axis") {
+        @Override
+        protected double calculateLowestVisibleTickValue() {
+            double lowTickValue = super.calculateLowestVisibleTickValue();
+            if (mean % 2 == 1) {
+                return lowTickValue;
+            } else {
+                return lowTickValue;
+            }
+        }
+    };
+
+    public JFreeChartGraph() {
+        JFreeChart chart = ChartFactory.createXYLineChart("Normal Distribution Graph",
+                "X Axis",
+                "Y Axis",
+                dataset,
+                PlotOrientation.VERTICAL,
+                false,
+                false,
+                false
+        );
+        xValues.setTickUnit(new NumberTickUnit(sigma));
+        plot = chart.getXYPlot();
+        xValues.setLowerMargin(0.1);
+        xValues.setUpperMargin(0.1);
+        plot.setDomainAxis(xValues);
+        xValues.setAutoRangeStickyZero(false);
+        xValues.setAutoRangeIncludesZero(false);
+        XYDifferenceRenderer renderer = new XYDifferenceRenderer();
+        renderer.setSeriesPaint(1, Color.GREEN);
+        renderer.setNegativePaint(Color.GREEN);
+        renderer.setPositivePaint(Color.GREEN);
+        
+//        XYSeriesCollection xySeriesCollection = new XYSeriesCollection();
+//        XYSeries fLine = new XYSeries("Above");
+//        fLine.add(1, 0);
+//        xySeriesCollection.addSeries(fLine);
+//        ((XYSeriesCollection) dataset).addSeries(fLine);
+//        NumberAxis xAxis = new NumberAxis(null);
+//        NumberAxis yAxis = new NumberAxis(null);
+//        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+//        chart = new JFreeChart(plot);
+
+        ChartPanel panel = new ChartPanel(chart);
+        setLayout(new BorderLayout());
+        setSize(500, 600);
+        JPanel top = new JPanel();
+        top.setLayout(new BorderLayout());
+        top.add(panel, BorderLayout.NORTH);
+        JFrame frame = new JFrame();
+        frame.add("North", top);
+        JPanel bottom = new JPanel();
+        bottom.add(new JLabel("Mean:"));
+        bottom.add(m);
+        bottom.add(new JLabel("Standard Deviation:"));
+        bottom.add(sd);
+        bottom.add(new JLabel("Value One:"));
+        bottom.add(valueOne);
+        bottom.add(submit);
+        submit.addActionListener(this);
+        bottom.add(trapArea);
+        bottom.add(rectArea);
+        frame.add("South", bottom);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        double meanValue = Double.parseDouble(m.getText());
+        double sdValue = Double.parseDouble(sd.getText());
+        double value = Double.parseDouble(valueOne.getText());
+
+        double secondValue = meanValue - (4.1 * sdValue);
+        double strips = 100;
+
+        if (e.getSource() == submit) {
+            setSD(sdValue);
+            setMean(meanValue);
+            trapArea.setText("Trap Area:" + " " + (1 - ModelCalculations.trapRule(secondValue, value, strips, meanValue, sdValue)));
+            rectArea.setText("Rectangle Area:" + " " + (1 - ModelCalculations.rectRule(secondValue, value, strips, meanValue, sdValue)));
+        }
+    }
+
+    private XYDataset initDataset() {
+        double minimumValue = mean - (4 * sigma), maximumValue = mean + (4 * sigma);
+        Function2D normal = new NormalDistributionFunction2D(mean, sigma);
+        XYDataset data = DatasetUtilities.sampleFunction2D(normal, minimumValue, maximumValue, 100, "Normal");
+        return data;
+    }
+
+    public void setMean(double mean) {
+        this.mean = mean;
+        plot.setDataset(initDataset());
+    }
+
+    public void setSD(double sd) {
+        this.sigma = sd;
+        xValues.setTickUnit(new NumberTickUnit(sd));
+        plot.setDataset(initDataset());
+
+    }
+
+
+    public static void main(String[] args) {
+        JFreeChartGraph demo = new JFreeChartGraph();
+    }
+
+    public void updateMean() {
+        try {
+            double values = Double.parseDouble(m.getText());
+            setMean(values);
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateSD() {
+        try {
+            double value = Double.parseDouble(sd.getText());
+            setSD(value);
+        } catch (Exception e) {
+        }
+    }
+}
