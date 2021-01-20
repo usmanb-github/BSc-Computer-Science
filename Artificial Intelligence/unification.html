@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0070)http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/unification.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>unification</title>
+<link type="text/css" rel="stylesheet" href="./unification_files/content.css">
+</head>
+<body bgcolor="white">
+<dt class="normal"><b><font color="green">unification, <code>=</code></font>, <code>\=</code></b>
+</dt><dd>When we write a <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/goal.html">goal</a> like <code>X = Y</code> in Prolog, we are testing
+  for more than simple equality in the mathematical sense. We are testing
+  whether <code>X</code> (which might be a <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/variable.html">variable</a>,
+  an <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/atom.html">atom</a>, or an
+  arbitrarily complex <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/term.html">term</a>) <i>unifies</i> with <code>Y</code> (which might also
+  be an atom, a variable, or a term). Two atoms,
+  including numeric atoms, unify if they are the same. Two more complex
+  terms unify if they have the same <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/functor.html">functor</a> and their
+  corresponding <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/argument.html">arguments</a> unify. A variable always unifies with a term (provided
+  that it is not previously unified with something different) by <a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/binding.html">binding</a>
+  to that term. <i>Examples</i>:
+  <table border="1">
+  <tbody><tr>
+  <td>
+  <pre>?- fred = fred.
+true.
+  </pre>
+  </td><td><code>fred</code> unifies with <code>fred</code> - they are the same atom.
+  </td></tr>
+
+  <tr>
+  <td>
+  <pre>?- X = fred.
+X = fred
+  </pre>
+  </td><td> <code>X</code> unifies with <code>fred</code> by binding <code>X</code> to <code>fred</code>.
+  </td></tr>
+
+  <tr>
+  <td>
+  <pre>?- X = likes(mary, pizza).
+X = likes(mary, pizza).
+  </pre>
+  </td><td><code>X</code> unifies with <code>likes(mary, pizza) by binding
+      <code>X</code> to <code>likes(mary, pizza)</code>.
+  </code></td></tr>
+
+  <tr>
+  <td>
+  <pre>?- likes(
+|        mary,
+|        book(
+|             title(Title),
+|             author(
+|                    given('Herman'),
+|                    SurnameTerm)))
+|  =
+|  likes(
+|        Who,
+|        book(
+|             title('Moby Dick'),
+|             author(
+|                    given('Herman'),
+|                    surname('Melville')))).
+Title = 'Moby Dick',
+SurnameTerm = surname('Melville'),
+Who = mary.
+  </pre>
+  </td><td><font color="red">Note that the | characters at the start of each line are continuation prompts
+    from Prolog because this query has been spread over more than one line.</font><br>
+    <code>Title</code>, <code>SurnameTerm</code>, and <code>Who</code> are bound in order to achieve unification.
+    The primary functors of the terms on either side of the <code>=</code> match, and unification proceeds by
+    matching pairs of corresponding arguments, for example, by matching and unifying the first argument on the left,
+    <code>mary</code>, with the first argument on the right, <code>Who</code>. Unification succeeds if <i>all</i>
+    of the arguments match. This will include recursively matching the arguments of substructures such as the
+    <code>author/2</code> substructures.
+  </td></tr>
+  </tbody></table>
+<p></p>
+<p>
+The goal <code>X \= Y</code> succeeds if <code>X = Y</code> would fail; it
+is the negated form of <code>=</code>.
+</p>
+<p>
+<b>Unnecessary Use of "<code>="</code> to Force Unification</b>
+</p>
+<p>
+This is basically a style issue. Consider the two following
+alternative pieces of Prolog code for computing the maximum of
+two numbers.
+</p>
+<pre class="code">max1(X, Y, X) :- X &gt; Y.
+max1(X, Y, Y) :- X =&lt; Y.
+</pre>
+versus
+<pre class="code">max2(X, Y, Max) :- X &gt; Y, Max = X.
+max2(X, Y, Max) :- X =&lt; Y, Max = Y.
+</pre>
+<p>
+The first version is to be preferred, particularly for a novice Prolog
+programmer, because it reinforces how Prolog works. It also does not
+involve the unnecessary <code>Max = X</code> or <code>Max
+= Y</code>.
+</p>
+<p>
+Whenever you write "<code>=</code>" in a Prolog procedure, review the
+code to see whether you can get rid of the "<code>=</code>" clause
+by replacing the item on the left of "<code>=</code>" by the item to
+the right of it, elsewhere in the procedure. If you do this with <code>max2</code>,
+you get <code>max1</code>. Sometimes you may have written the "<code>=</code>"
+with the variable on the right, in which case you need to instead replace the item
+on the right of the "<code>=</code>" with the item to the left of it.
+</p>
+
+<p>It should be possible to do this whenever there is a
+<a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/variable.html">variable</a> (rather than a more complex
+<a href="http://www.cse.unsw.edu.au/~billw/dictionaries/prolog/term.html">term</a>) on at least one side of the "<code>=</code>".
+</p>
+
+
+
+</dd></body></html>
